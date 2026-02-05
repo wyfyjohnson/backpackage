@@ -1,5 +1,5 @@
 {
-  description = "Create: Backpackage - A Minecraft mod adding Create-themed cardboard backpack";
+  description = "Create: Backpackage - A Minecraft mod adding Create-themed cardboard backpacks";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -48,6 +48,13 @@
 
             # Set JAVA_HOME for Gradle
             export JAVA_HOME="${jdk}"
+
+            # Use zsh if available
+            if [ -n "$ZSH_VERSION" ]; then
+              return
+            elif command -v zsh &> /dev/null; then
+              exec zsh
+            fi
           '';
         };
       }
