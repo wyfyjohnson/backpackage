@@ -6,17 +6,11 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      flake-utils,
-    }:
-    flake-utils.lib.eachDefaultSystem (
-      system:
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs { inherit system; };
-
+        
         jdk = pkgs.jdk21;
       in
       {
@@ -24,15 +18,37 @@
           buildInputs = with pkgs; [
             # Java Development Kit 21 (required for Minecraft 1.21.1)
             jdk
-
+            
             # Gradle wrapper is included in project, but this provides gradle commands
             gradle
-
+            
             # Git for version control
             git
-
+            
             # Java Language Server for Helix
             jdt-language-server
+            
+            # Graphics libraries for Minecraft client
+            libGL
+            libGLU
+            xorg.libX11
+            xorg.libXext
+            xorg.libXcursor
+            xorg.libXrandr
+            xorg.libXi
+            xorg.libXxf86vm
+          ];
+          
+          # Set library path for OpenGL
+          LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+            pkgs.libGL
+            pkgs.libGLU
+            pkgs.xorg.libX11
+            pkgs.xorg.libXext
+            pkgs.xorg.libXcursor
+            pkgs.xorg.libXrandr
+            pkgs.xorg.libXi
+            pkgs.xorg.libXxf86vm
           ];
 
           shellHook = ''
@@ -45,10 +61,10 @@
             echo "  ./gradlew runServer      - Run Minecraft server with mod"
             echo "  ./gradlew runData        - Generate data (recipes, tags, etc.)"
             echo ""
-
+            
             # Set JAVA_HOME for Gradle
             export JAVA_HOME="${jdk}"
-
+            
             # Use zsh if available
             if [ -n "$ZSH_VERSION" ]; then
               return

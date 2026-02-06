@@ -1,13 +1,11 @@
 {
-  "itemGroup.examplemod": "Example Mod Tab",
-  "block.examplemod.example_block": "Example Block",
-  "item.examplemod.example_item": "Example Item",
-
-  "examplemod.configuration.title": "Example Mod Configs",
-  "examplemod.configuration.section.examplemod.common.toml": "Example Mod Configs",
-  "examplemod.configuration.section.examplemod.common.toml.title": "Example Mod Configs",
-  "examplemod.configuration.items": "Item List",
-  "examplemod.configuration.logDirtBlock": "Log Dirt Block",
-  "examplemod.configuration.magicNumberIntroduction": "Magic Number Text",
-  "examplemod.configuration.magicNumber": "Magic Number"
+  "itemGroup.examplemod": "Create: Backpackage",
+  "create_backpackage.configuration.title": "Create: Backpackage Configs",
+  "create_backpackage.configuration.section.create_backpackage.common.toml": "Create: Backpackage Configs",
+  "create_backpackage.configuration.section.create_backpackage.common.toml.title": "Create: Backpackage Configs",
+  "create_backpackage.configuration.items": "Item List",
+  "create_backpackage.configuration.logDirtBlock": "Log Dirt Block",
+  "create_backpackage.configuration.magicNumberIntroduction": "Magic Number Text",
+  "create_backpackage.configuration.magicNumber": "Magic Number",
+  "item.create_backpackage": "Cardboard Backpackage"
 }
