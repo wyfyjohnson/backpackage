@@ -25,7 +25,13 @@ public class BackpackMenu extends AbstractContainerMenu {
     for (int row = 0; row < 3; row++) {
       for (int col = 0; col < 8; col++) {
         this.addSlot(new SlotItemHandler(backpackInventory, col + row * 8,
-            8 + col * 18, 18 + row * 18));
+            8 + col * 18, 18 + row * 18) {
+              @Override
+              public boolean mayPlace(ItemStack stack) {
+                // Prevent backpacks from being placed in backpack inventory
+                return !(stack.getItem() instanceof CardboardBackpackItem);
+              }
+            });
       }
     }
 

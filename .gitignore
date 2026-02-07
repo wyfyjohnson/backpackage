@@ -24,3 +24,7 @@ runs
 run-data
 
 repo
+
+# Ignore temporary editor files
+src/main/resources/assets/create_backpackage/textures/item/.xdp-*
+*.bbmodel-*
