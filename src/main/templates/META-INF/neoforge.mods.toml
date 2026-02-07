@@ -185,21 +185,21 @@ Keep it focused initially - get the core four upgrades working well before expan
 
 # Create dependency - we'll need this when we start integrating with Create's systems
 # Uncomment when ready to add Create integration
-#[[dependencies.${mod_id}]]
-#    modId="create"
-#    type="required"
-#    versionRange="[0.6.8,)"  # Adjust version as needed
-#    ordering="AFTER"
-#    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="create"
+    type="required"
+   versionRange="[0.6.8,)"  # Adjust version as needed
+   ordering="AFTER"
+   side="BOTH"
 
 # Curios API dependency - needed for wearable backpack slot
 # Uncomment when ready to add wearability
-#[[dependencies.${mod_id}]]
-#    modId="curios"
-#    type="required"
-#    versionRange="[9.0.0,)"  # Adjust version as needed
-#    ordering="AFTER"
-#    side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="curios"
+    type="required"
+   versionRange="[9.0.0,)"  # Adjust version as needed
+   ordering="AFTER"
+   side="BOTH"
 
 # Features are specific properties of the game environment, that you may want to declare you require. This example declares
 # that your mod requires GL version 3.2 or higher. Other features will be added. They are side aware so declaring this won't

@@ -1,5 +1,5 @@
 {
-  "itemGroup.examplemod": "Create: Backpackage",
+  "itemGroup.create_backpackage": "Create: Backpackage",
   "create_backpackage.configuration.title": "Create: Backpackage Configs",
   "create_backpackage.configuration.section.create_backpackage.common.toml": "Create: Backpackage Configs",
   "create_backpackage.configuration.section.create_backpackage.common.toml.title": "Create: Backpackage Configs",
@@ -7,5 +7,6 @@
   "create_backpackage.configuration.logDirtBlock": "Log Dirt Block",
   "create_backpackage.configuration.magicNumberIntroduction": "Magic Number Text",
   "create_backpackage.configuration.magicNumber": "Magic Number",
-  "item.create_backpackage": "Cardboard Backpackage"
+  "item.create_backpackage.cardboard_backpack": "Cardboard Backpack",
+  "container.create_backpackage.backpack": "Cardboard Backpack"
 }
