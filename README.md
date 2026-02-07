@@ -67,15 +67,16 @@ Progression through Create's material chain (basic cardboard → reinforced → 
 
 ## Development TODO
 
-- [ ] Set up basic backpack item
-- [ ] Implement inventory/container system
+- [x] Set up basic backpack item
+- [x] Implement inventory/container system
 - [ ] Make it wearable (Curios integration)
 - [ ] Make it placeable as block
 - [ ] Implement upgrade slot system
 - [ ] Create individual upgrades
 - [ ] Design and implement recipes
-- [ ] Textures and models
+- [x] Textures and models
 - [ ] Test with Create's logistics network
+- [x] Make a flake.nix for dev environment
 
 ## Why This Mod?
 
