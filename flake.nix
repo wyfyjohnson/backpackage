@@ -18,16 +18,19 @@
           buildInputs = with pkgs; [
             # Java Development Kit 21 (required for Minecraft 1.21.1)
             jdk
-            
+
             # Gradle wrapper is included in project, but this provides gradle commands
             gradle
-            
+
             # Git for version control
             git
-            
+
+            # Text editor with Java support
+            zed-editor
+
             # Java Language Server for Helix
             jdt-language-server
-            
+
             # Graphics libraries for Minecraft client
             libGL
             libGLU
@@ -54,17 +57,19 @@
           shellHook = ''
             echo "Create: Backpackage Development Environment"
             echo "Java Version: $(java -version 2>&1 | head -n 1)"
+            echo "JAVA_HOME: ${jdk}"
             echo ""
             echo "Available commands:"
+            echo "  zed .                    - Open project in Zed editor"
             echo "  ./gradlew build          - Build the mod"
             echo "  ./gradlew runClient      - Run Minecraft client with mod"
             echo "  ./gradlew runServer      - Run Minecraft server with mod"
             echo "  ./gradlew runData        - Generate data (recipes, tags, etc.)"
             echo ""
-            
-            # Set JAVA_HOME for Gradle
+
+            # Set JAVA_HOME for Gradle and IDEs
             export JAVA_HOME="${jdk}"
-            
+
             # Use zsh if available
             if [ -n "$ZSH_VERSION" ]; then
               return
