@@ -14,8 +14,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemContainerContents;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.ItemStackHandler;
+import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
-public class CardboardBackpackItem extends Item {
+public class CardboardBackpackItem extends Item implements ICurioItem {
 
     public CardboardBackpackItem(Properties properties) {
         super(properties);
@@ -32,10 +34,9 @@ public class CardboardBackpackItem extends Item {
         if (
             !level.isClientSide && player instanceof ServerPlayer serverPlayer
         ) {
-            // Load inventory from NBT
             ItemStackHandler inventory = getInventoryFromStack(stack);
+            BackpackLocation location = new BackpackLocation.InHand(hand);
 
-            // Open the backpack GUI
             serverPlayer.openMenu(
                 new SimpleMenuProvider(
                     (containerId, playerInventory, p) ->
@@ -43,22 +44,25 @@ public class CardboardBackpackItem extends Item {
                             containerId,
                             playerInventory,
                             inventory,
-                            hand
+                            location
                         ),
                     Component.translatable(
                         "container.create_backpackage.backpack"
                     )
                 ),
-                buf -> {
-                    buf.writeBoolean(hand == InteractionHand.MAIN_HAND);
-                }
+                buf -> location.writeToBuf(buf)
             );
         }
 
         return InteractionResultHolder.sidedSuccess(stack, level.isClientSide);
     }
 
-    // Load inventory from ItemStack NBT
+    // Curios: don't auto-equip on right-click (right-click opens GUI instead)
+    @Override
+    public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
+        return false;
+    }
+
     public static ItemStackHandler getInventoryFromStack(ItemStack stack) {
         ItemStackHandler handler = new ItemStackHandler(
             BackpackMenu.BACKPACK_SIZE
@@ -79,7 +83,6 @@ public class CardboardBackpackItem extends Item {
         return handler;
     }
 
-    // Save inventory to ItemStack NBT
     public static void saveInventoryToStack(
         ItemStack stack,
         ItemStackHandler inventory
