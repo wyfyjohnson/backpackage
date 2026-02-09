@@ -6,11 +6,17 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, nixpkgs, flake-utils }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = import nixpkgs { inherit system; };
-        
+
         jdk = pkgs.jdk21;
       in
       {
@@ -31,6 +37,9 @@
             # Java Language Server for Helix
             jdt-language-server
 
+            # Nix Language Server
+            nixd
+
             # Graphics libraries for Minecraft client
             libGL
             libGLU
@@ -41,7 +50,7 @@
             xorg.libXi
             xorg.libXxf86vm
           ];
-          
+
           # Set library path for OpenGL
           LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
             pkgs.libGL

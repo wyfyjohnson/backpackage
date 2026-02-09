@@ -1,6 +1,4 @@
 {
   "replace": false,
-  "values": [
-    "create_backpackage:cardboard_backpack"
-  ]
+  "values": ["create_backpackage:cardboard_backpack"]
 }
