@@ -78,6 +78,11 @@ public class CreateBackpackage {
             )
     );
 
+    public static final DeferredItem<Item> MAGNET_UPGRADE = ITEMS.register(
+        "magnet_upgrade",
+        () -> new MagnetUpgradeItem(new Item.Properties().stacksTo(1))
+    );
+
     public static final DeferredHolder<
         BlockEntityType<?>,
         BlockEntityType<BackpackBlockEntity>
@@ -98,6 +103,7 @@ public class CreateBackpackage {
             .icon(() -> CARDBOARD_BACKPACK.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(CARDBOARD_BACKPACK.get());
+                output.accept(MAGNET_UPGRADE.get());
             })
             .build()
     );
@@ -113,6 +119,7 @@ public class CreateBackpackage {
         MENUS.register(modEventBus);
 
         NeoForge.EVENT_BUS.register(this);
+        NeoForge.EVENT_BUS.register(new MagnetUpgradeHandler());
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
