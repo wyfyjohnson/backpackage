@@ -1,0 +1,9 @@
+{
+  "itemGroup.create_backpackage": "Create: Backpackage",
+  "item.create_backpackage.cardboard_backpack": "Cardboard Backpack",
+  "block.create_backpackage.cardboard_backpack": "Cardboard Backpack",
+  "container.create_backpackage.backpack": "Backpack",
+  "key.create_backpackage.open_backpack": "Open Backpack",
+  "key.categories.create_backpackage": "Create: Backpackage",
+  "item.create_backpackage.magnet_upgrade": "Magnet Upgrade"
+}
