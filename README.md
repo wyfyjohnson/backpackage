@@ -12,8 +12,11 @@ Create-themed cardboard backpacks with modular upgrade system. Wearable (via Cur
 
 The backpack has upgrade slots that accept different contraption upgrades:
 
-### 1. Magnet Upgrade
-- Basic item pickup/collection
+### 1. Magnet Upgrade ✅
+- Pulls nearby dropped items into the backpack (8 block radius)
+- Checks every 0.5 seconds for performance
+- Respects vanilla pickup delay (won't grab items you just threw)
+- Disabled while sneaking
 - Recipe ideas: Electron Tube + Copper?
 
 ### 2. Void Upgrade
@@ -35,6 +38,26 @@ The backpack has upgrade slots that accept different contraption upgrades:
 - Essentially: remote base access while exploring
 
 **Note**: Frogport is in base Create, not New Age (New Age is the electricity addon)
+
+### 5. Auto-Feeder Upgrade
+- Automatically eats food from the backpack when the player is hungry
+- Configurable with whitelist/blacklist or Create-style filters
+- Won't eat golden apples unless you want it to
+
+### 6. Auto-Drinker Upgrade
+- Automatically drinks potions from the backpack
+- Configurable with whitelist/blacklist or Create-style filters
+- Great for keeping fire resistance up while in the Nether
+
+### 7. Slot Memory Upgrade
+- Locks backpack slots to remember specific item types
+- Only allows the memorized item in that slot (like a filter for each slot)
+- Matches by item type, ignoring durability/NBT — so a half-broken pickaxe still goes in the pickaxe slot
+- Useful for tool loadouts, sorted inventories, or keeping your backpack organized
+
+### Upgrade Features (Planned)
+- **Toggle system**: Enable/disable upgrades without removing them (e.g., sneak+keybind or GUI button)
+- **Filter support**: Upgrades like feeder, drinker, and void will support Create-style filters or whitelist/blacklist configuration
 
 ## Storage Sizing
 
@@ -69,10 +92,20 @@ Progression through Create's material chain (basic cardboard → reinforced → 
 
 - [x] Set up basic backpack item
 - [x] Implement inventory/container system
-- [ ] Make it wearable (Curios integration)
-- [ ] Make it placeable as block
-- [ ] Implement upgrade slot system
-- [ ] Create individual upgrades
+- [x] Item persistence (DataComponents.CONTAINER)
+- [x] Make it wearable (Curios integration)
+- [x] Keybind ("B") to open from Curios slot
+- [x] Make it placeable as block
+- [x] Implement upgrade slot system (1 slot, BackpackUpgradeItem interface)
+- [x] Magnet Upgrade
+- [ ] Upgrade toggle system
+- [ ] Void Upgrade
+- [ ] Crafting Upgrade
+- [ ] Linked Upgrade
+- [ ] Auto-Feeder Upgrade
+- [ ] Auto-Drinker Upgrade
+- [ ] Slot Memory Upgrade
+- [ ] Filter/whitelist/blacklist system
 - [ ] Design and implement recipes
 - [x] Textures and models
 - [ ] Test with Create's logistics network

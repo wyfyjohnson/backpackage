@@ -5,10 +5,14 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -20,6 +24,7 @@ import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.items.ItemStackHandler;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -49,12 +54,38 @@ public class CreateBackpackage {
         DeferredRegister.createBlocks(MODID);
     public static final DeferredRegister.Items ITEMS =
         DeferredRegister.createItems(MODID);
+    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
+        DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
         DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
+    public static final DeferredBlock<BackpackBlock> CARDBOARD_BACKPACK_BLOCK =
+        BLOCKS.register("cardboard_backpack", () ->
+            new BackpackBlock(
+                BlockBehaviour.Properties.of()
+                    .strength(0.5f)
+                    .sound(SoundType.WOOL)
+                    .noOcclusion()
+            )
+        );
+
     public static final DeferredItem<Item> CARDBOARD_BACKPACK = ITEMS.register(
         "cardboard_backpack",
-        () -> new CardboardBackpackItem(new Item.Properties().stacksTo(1))
+        () ->
+            new CardboardBackpackItem(
+                CARDBOARD_BACKPACK_BLOCK.get(),
+                new Item.Properties().stacksTo(1)
+            )
+    );
+
+    public static final DeferredHolder<
+        BlockEntityType<?>,
+        BlockEntityType<BackpackBlockEntity>
+    > BACKPACK_BLOCK_ENTITY = BLOCK_ENTITIES.register("backpack", () ->
+        BlockEntityType.Builder.of(
+            BackpackBlockEntity::new,
+            CARDBOARD_BACKPACK_BLOCK.get()
+        ).build(null)
     );
 
     public static final DeferredHolder<
@@ -77,6 +108,7 @@ public class CreateBackpackage {
 
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
+        BLOCK_ENTITIES.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
         MENUS.register(modEventBus);
 
@@ -101,43 +133,58 @@ public class CreateBackpackage {
         net.neoforged.neoforge.network.handling.IPayloadContext context
     ) {
         context.enqueueWork(() -> {
-            if (context.player() instanceof ServerPlayer serverPlayer) {
-                CuriosApi.getCuriosInventory(serverPlayer).ifPresent(
-                    handler -> {
-                        handler
-                            .findFirstCurio(CARDBOARD_BACKPACK.get())
-                            .ifPresent(result -> {
-                                var slotContext = result.slotContext();
-                                BackpackLocation location =
-                                    new BackpackLocation.InCurios(
-                                        slotContext.identifier(),
-                                        slotContext.index()
-                                    );
-                                ItemStackHandler inventory =
-                                    CardboardBackpackItem.getInventoryFromStack(
-                                        result.stack()
-                                    );
+            if (!(context.player() instanceof ServerPlayer serverPlayer)) {
+                return;
+            }
 
-                                serverPlayer.openMenu(
-                                    new SimpleMenuProvider(
-                                        (containerId, playerInventory, p) ->
-                                            new BackpackMenu(
-                                                containerId,
-                                                playerInventory,
-                                                inventory,
-                                                location
-                                            ),
-                                        Component.translatable(
-                                            "container.create_backpackage.backpack"
-                                        )
-                                    ),
-                                    buf -> location.writeToBuf(buf)
-                                );
-                            });
-                    }
+            // Try Curios slots first
+            var curiosResult = CuriosApi.getCuriosInventory(
+                serverPlayer
+            ).flatMap(handler ->
+                handler.findFirstCurio(CARDBOARD_BACKPACK.get())
+            );
+
+            if (curiosResult.isPresent()) {
+                var result = curiosResult.get();
+                var slotContext = result.slotContext();
+                BackpackLocation location = new BackpackLocation.InCurios(
+                    slotContext.identifier(),
+                    slotContext.index()
                 );
+                openBackpackMenu(serverPlayer, result.stack(), location);
+                return;
+            }
+
+            // Fallback: check vanilla chest slot
+            var chestStack = serverPlayer.getItemBySlot(EquipmentSlot.CHEST);
+            if (chestStack.getItem() instanceof CardboardBackpackItem) {
+                BackpackLocation location = new BackpackLocation.InChestSlot();
+                openBackpackMenu(serverPlayer, chestStack, location);
             }
         });
+    }
+
+    private void openBackpackMenu(
+        ServerPlayer player,
+        net.minecraft.world.item.ItemStack backpackStack,
+        BackpackLocation location
+    ) {
+        ItemStackHandler inventory =
+            CardboardBackpackItem.getInventoryFromStack(backpackStack);
+
+        player.openMenu(
+            new SimpleMenuProvider(
+                (containerId, playerInventory, p) ->
+                    new BackpackMenu(
+                        containerId,
+                        playerInventory,
+                        inventory,
+                        location
+                    ),
+                Component.translatable("container.create_backpackage.backpack")
+            ),
+            buf -> location.writeToBuf(buf)
+        );
     }
 
     @SubscribeEvent

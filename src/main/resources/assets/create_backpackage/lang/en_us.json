@@ -1,13 +1,7 @@
 {
   "itemGroup.create_backpackage": "Create: Backpackage",
-  "create_backpackage.configuration.title": "Create: Backpackage Configs",
-  "create_backpackage.configuration.section.create_backpackage.common.toml": "Create: Backpackage Configs",
-  "create_backpackage.configuration.section.create_backpackage.common.toml.title": "Create: Backpackage Configs",
-  "create_backpackage.configuration.items": "Item List",
-  "create_backpackage.configuration.logDirtBlock": "Log Dirt Block",
-  "create_backpackage.configuration.magicNumberIntroduction": "Magic Number Text",
-  "create_backpackage.configuration.magicNumber": "Magic Number",
   "item.create_backpackage.cardboard_backpack": "Cardboard Backpack",
+  "block.create_backpackage.cardboard_backpack": "Cardboard Backpack",
   "container.create_backpackage.backpack": "Backpack",
   "key.create_backpackage.open_backpack": "Open Backpack",
   "key.categories.create_backpackage": "Create: Backpackage"
