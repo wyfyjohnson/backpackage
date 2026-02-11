@@ -1,0 +1,20 @@
+{
+  "criteria": {
+    "has_cardboard": {
+      "conditions": {
+        "items": [
+          {
+            "items": "create:cardboard"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_cardboard"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

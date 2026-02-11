@@ -1,0 +1,31 @@
+{
+  "type": "create_backpackage:damaging_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "create:copper_casing"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "item": "create:electron_tube"
+    },
+    {
+      "item": "create:super_glue"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "create_backpackage:magnet_upgrade"
+  }
+}

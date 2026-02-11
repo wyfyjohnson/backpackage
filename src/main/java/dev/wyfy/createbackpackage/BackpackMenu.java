@@ -32,7 +32,6 @@ public class BackpackMenu extends AbstractContainerMenu {
     private static final double MAX_INTERACTION_DIST_SQ = 64.0;
 
     private final ItemStackHandler backpackInventory;
-    private final Player player;
     private final BackpackLocation location;
 
     public BackpackMenu(
@@ -56,7 +55,6 @@ public class BackpackMenu extends AbstractContainerMenu {
     ) {
         super(CreateBackpackage.BACKPACK_MENU.get(), containerId);
         this.backpackInventory = backpackInventory;
-        this.player = playerInventory.player;
         this.location = location;
 
         addBackpackSlots();
