@@ -40,6 +40,9 @@
             # Nix Language Server
             nixd
 
+            # Audio library for Minecraft client
+            openal
+
             # Graphics libraries for Minecraft client
             libGL
             libGLU
@@ -53,6 +56,7 @@
 
           # Set library path for OpenGL
           LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+            pkgs.openal
             pkgs.libGL
             pkgs.libGLU
             pkgs.xorg.libX11
