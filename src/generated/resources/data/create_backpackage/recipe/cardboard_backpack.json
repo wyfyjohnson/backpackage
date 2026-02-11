@@ -1,0 +1,30 @@
+{
+  "type": "create_backpackage:damaging_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:barrel"
+    },
+    "C": {
+      "item": "create:clipboard"
+    },
+    "D": {
+      "item": "create:cardboard"
+    },
+    "G": {
+      "item": "create:super_glue"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "SCS",
+    "DBD",
+    "SGS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "create_backpackage:cardboard_backpack"
+  }
+}
